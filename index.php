@@ -11,6 +11,7 @@
 
 	
 	<form method="post" action="index.php">
+	
 	<label for="rname">Recipe Name</label>
 	<input type="text" id="rname" name="recipe_name" placeholder="Enter the recipe name" 
 	
@@ -18,7 +19,14 @@
 	<input type="text" id="aname" name="author_name" placeholder="Enter your name" 
 	
 	<label for="pname">Prep Time (In Minutes)</label>
-	<input type="text" id="pname" name="prep_time" placeholder="Enter prep time" /><br />
+	<input type="text" id="pname" name="prep_time" placeholder="Enter prep time" />
+	
+	<label>Recipe type</label>
+    <select id = "tag_id" name="tag">
+    <option value = "non-vegetarian">non-vegetarian</option>
+    <option value = "vegetarian">vegetarian</option>
+    <option value = "vegan">vegan</option>
+    </select><br />
 	
 	Ingredients: <br />
 	
@@ -68,7 +76,6 @@
 	
 	<input type="submit" name="submit" value="Submit" />
 	</form>
-	
 
 
 	<?php
@@ -96,8 +103,10 @@
 		$r_name = $_POST['recipe_name'];	
 		$a_name = $_POST['author_name'];
 		$p_time = $_POST['prep_time'];	
-		
-		$recipe_sql = "INSERT INTO recipe(name, author, preptime) VALUES ('$r_name', '$a_name', '$p_time')";
+		$dirs = $_POST['directions'];
+		$tag = $_POST['tag'];
+	
+		$recipe_sql = "INSERT INTO recipe(r_id, u_id, name, author, preptime, directions, tag) VALUES (DEFAULT, '', '$r_name', '$a_name', '$p_time', '$dirs', '$tag')";
 		
 		 if(mysqli_query($db_handle, $recipe_sql)){
 			echo "Recipe info added successfully.";
@@ -130,23 +139,14 @@
 		$protein = $_POST['protein'];	
 		$sugar = $_POST['sugar'];	
 		
-		$nutrition_sql = "INSERT INTO nutrition(fat, sodium, carbs, protein, sugar) VALUES ('$fat', '$sodium', '$carbs', '$protein', '$sugar')";
+		$nutrition_sql = "INSERT INTO nutrition(r_id, n_id, fat, sodium, carbs, protein, sugar) VALUES (LAST_INSERT_ID(), DEFAULT, '$fat', '$sodium', '$carbs', '$protein', '$sugar')";
 		
 		if(mysqli_query($db_handle, $nutrition_sql)){
 			echo "Nutritional info added successfully.";
 		} else{
-			echo "ERROR" . mysqli_error($link);
+			echo "ERROR" . mysqli_error($nutrition_sql);
 		}
 		
-		$dirs = $_POST['directions'];
-		
-		$dirs_sql = "INSERT INTO recipe(directions) VALUES ('$dirs')";
-		
-		if(mysqli_query($db_handle, $dirs_sql)){
-			echo "Direction info added successfully.";
-		} else{
-			echo "ERROR" . mysqli_error($link);
-		}
 	}
 	?>
 	
