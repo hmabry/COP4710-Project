@@ -112,27 +112,16 @@
 		$i_amount = $_POST['amount'];	
 		$i_unit = $_POST['unit'];	
 		
-		#$ingredient_sql = "INSERT INTO ingredient(name,  amount, unit) VALUES ('$i_name', '$i_amount', '$i_unit')";	
-		
-		foreach($_POST['ingredient'] as $value)
-		{
-			$ingredient_sql = "INSERT INTO ingredient(name) VALUES ('$value')";
+		for ($i = 0; $i < count($i_name); $i++){
+			$ing = ($_POST['ingredient'][$i]);
+			$amt = ($_POST['amount'][$i]);
+			$unit = ($_POST['unit'][$i]);	
+			echo "The ingredient is $ing";
+			echo "the amount is $amt";
+			echo "the unit is $unit";
+			$ingredient_sql = ("INSERT INTO ingredient(name, amount, unit) VALUES ('$ing', '$amt', '$unit')");
 			mysqli_query($db_handle, $ingredient_sql);
-		}
-		
-		foreach($_POST['amount'] as $value)
-		{
-			$ingredient_sql = "INSERT INTO ingredient(amount) VALUES ('$value')";
-			mysqli_query($db_handle, $ingredient_sql);
-		}
-		
-		foreach($_POST['unit'] as $value)
-		{
-			$ingredient_sql = "INSERT INTO ingredient(unit) VALUES ('$value')";
-			mysqli_query($db_handle, $ingredient_sql);
-		}
-		
-		
+		} 
 		
 		
 		$fat = $_POST['fat'];	
