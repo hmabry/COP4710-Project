@@ -16,9 +16,12 @@
 		while ( $db_field = mysqli_fetch_assoc($result) ) {
 			print "<BR>";
 			print "<b>Recipe: </b>" . $db_field['name'] . " ";
-			print "Author: " . $db_field['author'] . " ";
-			print "Prep Time: " . $db_field['preptime'] . "<BR>";
+			print "<b>Author: </b>" . $db_field['author'] . " ";
+			print "<b>Prep Time: </b>" . $db_field['preptime'] . " ";
+			print "<b>r_id: </b>" . $db_field['r_id'] . "<BR>";
 		}
+		
+	
 	}
 ?>
 
