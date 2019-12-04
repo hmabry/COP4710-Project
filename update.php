@@ -8,9 +8,17 @@
 
 <label for="rid">Recipe ID</label>
 <input type="text" id="rid" name="recipe_id" placeholder="Enter the ID"/><br />
-<label for="rname">Recipe Name</label>
-<input type="text" id="rname" name="recipe_name" placeholder="Enter new name"/>
+<label>Table to Update</label>
+  <select id = "table_id" name="table">
+  <option value = "recipe">recipe</option>
+  <option value = "ingredient">ingredient</option>
+  <option value = "nutrition">nutrition</option>
+</select><br />
+<label for="attribute">Attribute</label>
+<input type="text" id="attribute" name="attribute" placeholder="Enter the attribute"/>
 <br />
+<label for="value">Value</label>
+<input type="text" id="value" name="value" placeholder="Enter the value"/><br />
 <input type="submit" name="submit" value="Submit" />
 </form>
 
@@ -21,9 +29,11 @@
 
   if(!empty($_POST['submit'])){
     $r_id = $_POST['recipe_id'];
-    $r_name = $_POST['recipe_name'];
+    $table_name = $_POST['table'];
+    $attribute = $_POST['attribute'];
+    $value = $_POST['value'];
 
-    $update_sql = "UPDATE recipe SET name = '$r_name' WHERE r_id = '$r_id'";
+    $update_sql = "UPDATE $table_name SET $attribute = '$value' WHERE r_id = '$r_id'";
 
     if(mysqli_query($db_handle, $update_sql)){
       echo "Recipe update successful.";
