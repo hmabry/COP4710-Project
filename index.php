@@ -4,7 +4,7 @@
 </head>
 
 <body>
-	<title>MY WEBSITE PAGE</title>
+	<title>Recipes</title>
 	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/jquery-ui.min.js"></script>
@@ -121,6 +121,15 @@
 		$i_amount = $_POST['amount'];	
 		$i_unit = $_POST['unit'];	
 		
+		$whatisq = "SELECT LAST_INSERT_ID()";
+		$whatis = mysqli_query($db_handle, $whatisq);
+		$row = mysqli_fetch_assoc($whatis);	
+		var_dump($row);
+		$str = implode($row);
+		echo $str;
+		$int = (int)$str;
+		echo $int;
+		
 		for ($i = 0; $i < count($i_name); $i++){
 			$ing = ($_POST['ingredient'][$i]);
 			$amt = ($_POST['amount'][$i]);
@@ -130,6 +139,8 @@
 			echo "the unit is $unit";
 			$ingredient_sql = ("INSERT INTO ingredient(name, amount, unit) VALUES ('$ing', '$amt', '$unit')");
 			mysqli_query($db_handle, $ingredient_sql);
+			$isin_sql = "INSERT INTO is_in(r_id, name) VALUES ('$int', '$ing')";
+			mysqli_query($db_handle, $isin_sql);
 		} 
 		
 		
